@@ -1,6 +1,6 @@
 
 
-    {"bigtoepose.jpg":
+    {"startPose.jpg":
         {"score":0.6,"keypoints":
             [{"score":0.999160647392273,"part":"nose",
                 "position":{"x":348.45116403780094,"y":85.56370538496321}},
