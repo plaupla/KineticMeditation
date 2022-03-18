@@ -21,13 +21,9 @@
 
 //import {drawBoundingBox, drawKeypoints, drawSkeleton, isMobile, toggleLoadingUI, tryResNetButtonName, tryResNetButtonText, updateTryResNetButtonDatGuiCss} from './demo_util';
 
-//import array target
-
-// const pose1Target = require('./jsonParse');
-// console.log(pose1Target.arrTarget);
-
-const videoWidth = 600; //initially 700
+const videoWidth = 600;
 const videoHeight = 500;
+//const stats = new Stats();
 
 /**
  * Loads a the camera to be used in the demo
@@ -97,7 +93,6 @@ const guiState = {
     minPoseConfidence: 0.15,
     minPartConfidence: 0.1,
     nmsRadius: 30.0,
-    angle: 0,
   },
   output: {
     showVideo: true,
@@ -111,7 +106,6 @@ const guiState = {
 /**
  * Sets up dat.gui controller on the top-right of the window
  */
-
 function setupGui(cameras, net) {
   guiState.net = net;
 
@@ -277,7 +271,6 @@ function setupGui(cameras, net) {
   output.add(guiState.output, "showSkeleton");
   output.add(guiState.output, "showPoints");
   output.add(guiState.output, "showBoundingBox");
-  //output.add(guiState.output, 'angle');
   output.open();
 
   architectureController.onChange(function (architecture) {
@@ -427,7 +420,6 @@ function detectPoseInRealTime(video, net) {
           maxDetections: guiState.multiPoseDetection.maxPoseDetections,
           scoreThreshold: guiState.multiPoseDetection.minPartConfidence,
           nmsRadius: guiState.multiPoseDetection.nmsRadius,
-          //angle: guiState.multiPoseDetection.shoulderModelAngleR,
         });
 
         poses = poses.concat(all_poses);
@@ -462,725 +454,7 @@ function detectPoseInRealTime(video, net) {
         }
       }
 
-      //ctx.font = 'normal normal 20px arial';
-      //ctx.textAlign = 'right';
-      //ctx.fillText('testing text', 200, 80);
-      // console.log("getting keypoints score");
-      // console.log(keypoints);
-
-      //calculate the distance here
-      //measure one pose - starting position
-      // console.log("calculate similarity")
-      // var noseX1 = 348.45116403780094;
-      // var noseY1= 85.56370538496321;
-      // var leftShoulderX = 442.6869638049649;
-      // var leftShoulderY = 174.2667611563716;
-      // var rightShoulderX = 216.47451675355666;
-      // var rightShoulderY = 182.14048155550825;
-      // var leftElbowX = 523.0347047798365;
-      // var leftElbowY = 306.81460369421814;
-      // var rightElbowX = 126.17579597443458;
-      // var rightElbowY = 306.89585407420356;
-      // var leftWristX = 522.177275447623;
-      // var leftWristY = 402.04418256588946;
-      // var rightWristX = 107.853321119969;
-      // var rightWristY = 379.3897196847641;
-
-      //access to jsonbin but limited api
-      // request.open(
-      //   'GET',
-      //   'https://api.jsonbin.io/v3/b/60e496b855b7245a20d74bbf'
-      // );
-      // req.setRequestHeader(
-      //   'X-Master-Key',
-      //   '$2b$10$wDH7TMb4qyjKmT6Fbd6Xk.Er5FlbGz051/xfcol5T2C.KqB0fLlFO'
-      // );
-      //
-
-      // fetch("http://ulfatest.axanstudio.com/posesall.json")
-      // .then((result) => result.json())
-      // .then((result) => {
-      //do something
-      // }
-      //online server http://ulfatest.axanstudio.com/posesall.json
-
-      // from mozilla dev how to access json in javascript
-      //now can access the poses, have to host the json in local server
-
-      //local server port  https://ulfatest.axanstudio.com/posesall.json
-
-      //XHR code doesnt work with ssl
-
-      // let requestURL = "http://localhost:3000/startPose";
-      // let request = new XMLHttpRequest();
-
-      // request.open("GET", requestURL);
-      // request.responseType = "json";
-      // request.send();
-
-      // request.onload = function () {
-      //   const mydata = request.response;
-      //console.log(mydata);
-
-      //fetch from this url
-      //fetch return promise using .then() to run follow up code then equal to onload,
-      // then grab response run in json() which take the response into json file. equal to request.responseType
-      // define a function to receive the raw json file json () promise to
-      //return.json parse json response into Javascript objects
-
-      // let mydata;
-
-      // fetch('https://ulfatest.axanstudio.com/posesall.json')
-      //   .then(function (response) {
-      //     return response.json();
-      //   })
-      //   .then(function (json) {
-      //     mydata = json;
-      //   });
-
-      // let mydata;
-
-      // fetch('https://ulfatest.axanstudio.com/posesall.json')
-      //   .then(function (response) {
-      //     return response.json();
-      //   })
-      //   .then(function(mydata) {
-      //     console.log(mydata);
-      //     //.then((res) => console.log(res))
-      //     //.then((mydata ))
-      //   });
-
-      // fetch('https://ulfatest.axanstudio.com/posesall.json')
-      // .then(response => {
-      //   console.log(response)
-      //   return response.json()
-      // })
-      // .then (mydata => {
-      //   console.log('the data', mydata)
-      //   console.log(mydata.keypoints)
-      // });
-
-      //dari mdn fetch
-
-      // fetch('https://ulfatest.axanstudio.com/posesall.json')
-      //   .then(function(response) {
-      //     response.json()
-      //     .then(function(json) {
-      //       let mydata = json;
-      //       console.log(mydata);
-      //     });
-      //   });
-
-      //test fetch
-
-      //     fetch('https://ulfatest.axanstudio.com/posesall.json')
-      // .then(response => response.json())
-      // .then(mydata => console.log(mydata));
-
-      //         var mydata;
-
-      // fetch('https://ulfatest.axanstudio.com/posesall.json')
-      //   .then(res => res.json())
-      //   .then(data => mydata = data)
-      //   .then(() => console.log(mydata))
-
-      //or this
-
-      //  async function postData(url = '', data = {}) {
-      //   // Default options are marked with *
-      //   const response = await fetch(url, {
-      //     method: 'GET', // *GET, POST, PUT, DELETE, etc.
-      //     mode: 'cors', // no-cors, *cors, same-origin
-      //     cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
-      //     //credentials: 'same-origin', // include, *same-origin, omit
-      //     headers: {
-      //       'Content-Type': 'application/json'
-      //       // 'Content-Type': 'application/x-www-form-urlencoded',
-      //     },
-      //     redirect: 'follow', // manual, *follow, error
-      //     referrerPolicy: 'no-referrer', // no-referrer, *no-referrer-when-downgrade, origin, origin-when-cross-origin, same-origin, strict-origin, strict-origin-when-cross-origin, unsafe-url
-      //     body: JSON.stringify(data) // body data type must match "Content-Type" header
-      //   });
-      //   return response.json(); // parses JSON response into native JavaScript objects
-      // }
-
-      // postData('https://example.com/answer', { answer: 42 })
-      //   .then(data => {
-      //     console.log(data); // JSON data parsed by `data.json()` call
-      //   });
-
-      // Call the function and output value or error message to console
-
-      //calculate distance between model and live feed keypoints
-      // var noseDistace = Math.sqrt(
-      //   Math.pow(
-      //     mydata.keypoints[0].position.x - keypoints[0].position.x,
-      //     2
-      //   ) +
-      //     Math.pow(
-      //       mydata.keypoints[0].position.y - keypoints[0].position.y,
-      //       2
-      //     )
-      // );
-      // var leftEyeDistace = Math.sqrt(
-      //   Math.pow(
-      //     mydata.keypoints[1].position.x - keypoints[1].position.x,
-      //     2
-      //   ) +
-      //     Math.pow(
-      //       mydata.keypoints[1].position.y - keypoints[1].position.y,
-      //       2
-      //     )
-      // );
-      // var rightEyeDistace = Math.sqrt(
-      //   Math.pow(
-      //     mydata.keypoints[2].position.x - keypoints[2].position.x,
-      //     2
-      //   ) +
-      //     Math.pow(
-      //       mydata.keypoints[2].position.y - keypoints[2].position.y,
-      //       2
-      //     )
-      // );
-      // var leftEarDistace = Math.sqrt(
-      //   Math.pow(
-      //     mydata.keypoints[3].position.x - keypoints[3].position.x,
-      //     2
-      //   ) +
-      //     Math.pow(
-      //       mydata.keypoints[3].position.y - keypoints[3].position.y,
-      //       2
-      //     )
-      // );
-      // var rightEarDistace = Math.sqrt(
-      //   Math.pow(
-      //     mydata.keypoints[4].position.x - keypoints[4].position.x,
-      //     2
-      //   ) +
-      //     Math.pow(
-      //       mydata.keypoints[4].position.y - keypoints[4].position.y,
-      //       2
-      //     )
-      // );
-      // var leftShouderDistace = Math.sqrt(
-      //   Math.pow(
-      //     mydata.keypoints[5].position.x - keypoints[5].position.x,
-      //     2
-      //   ) +
-      //     Math.pow(
-      //       mydata.keypoints[5].position.y - keypoints[5].position.y,
-      //       2
-      //     )
-      // );
-      // var rightShouderDistace = Math.sqrt(
-      //   Math.pow(
-      //     mydata.keypoints[6].position.x - keypoints[6].position.x,
-      //     2
-      //   ) +
-      //     Math.pow(
-      //       mydata.keypoints[6].position.y - keypoints[6].position.y,
-      //       2
-      //     )
-      // );
-      // var leftElbowDistace = Math.sqrt(
-      //   Math.pow(
-      //     mydata.keypoints[7].position.x - keypoints[7].position.x,
-      //     2
-      //   ) +
-      //     Math.pow(
-      //       mydata.keypoints[7].position.y - keypoints[7].position.y,
-      //       2
-      //     )
-      // );
-      // var rightElbowDistace = Math.sqrt(
-      //   Math.pow(
-      //     mydata.keypoints[8].position.x - keypoints[8].position.x,
-      //     2
-      //   ) +
-      //     Math.pow(
-      //       mydata.keypoints[8].position.y - keypoints[8].position.y,
-      //       2
-      //     )
-      // );
-      // var lefttWristDistace = Math.sqrt(
-      //   Math.pow(
-      //     mydata.keypoints[9].position.x - keypoints[9].position.x,
-      //     2
-      //   ) +
-      //     Math.pow(
-      //       mydata.keypoints[9].position.y - keypoints[9].position.y,
-      //       2
-      //     )
-      // );
-      // var rightWristDistace = Math.sqrt(
-      //   Math.pow(
-      //     mydata.keypoints[10].position.x - keypoints[10].position.x,
-      //     2
-      //   ) +
-      //     Math.pow(
-      //       mydata.keypoints[10].position.y - keypoints[10].position.y,
-      //       2
-      //     )
-      // );
-
-      // const rightElbowModelX = mydata.keypoints[8].position.x; //knee
-      // const rightShoulderModelX = mydata.keypoints[6].position.x; //hip
-      // const rightWristModelX = mydata.keypoints[10].position.x; //ankle
-      // const rightElbowModelY = mydata.keypoints[8].position.y; //knee
-      // const rightShoulderModelY = mydata.keypoints[6].position.y; //hip
-      // const rightWristModelY = mydata.keypoints[10].position.y; //ankle
-
-      //+++++++++++++++++++++comment to test live 1 aug++++
-      /*
-        //suitable with cosine law
-
-        //right arm
-
-        const shoulder = {
-          x: mydata.keypoints[6].position.x,
-          y: mydata.keypoints[6].position.y,
-        };
-
-        const elbow = {
-          x: mydata.keypoints[8].position.x,
-          y: mydata.keypoints[8].position.y,
-        };
-
-        const wrist = {
-          x: mydata.keypoints[10].position.x,
-          y: mydata.keypoints[10].position.y,
-        };
-
-        var sE = Math.sqrt(
-          Math.pow(shoulder.x - elbow.x, 2) + Math.pow(shoulder.y - elbow.y, 2)
-        );
-        var eW = Math.sqrt(
-          Math.pow(elbow.x - wrist.x, 2) + Math.pow(elbow.y - wrist.y, 2)
-        );
-        var sW = Math.sqrt(
-          Math.pow(shoulder.x - wrist.x, 2) + Math.pow(shoulder.y - wrist.y, 2)
-        );
-        //angle in radian
-
-        var resultRadian = Math.acos(
-          (Math.pow(sE, 2) + Math.pow(eW, 2) - Math.pow(sW, 2)) / (2 * sE * eW)
-        );
-
-        console.log('the right arm is moving on' + resultRadian + ' radian');
-
-        //angle in degree
-        var resultDegree =
-          (Math.acos(
-            (Math.pow(sE, 2) + Math.pow(eW, 2) - Math.pow(sW, 2)) /
-              (2 * sE * eW)
-          ) *
-            180) /
-          Math.PI;
-
-        console.log('the right arm is moving on ' + resultDegree + ' degree');
-
-        //left elbow angle
-
-        const leftShoulder = {
-          x: mydata.keypoints[5].position.x,
-          y: mydata.keypoints[5].position.y,
-        };
-
-        const leftElbow = {
-          x: mydata.keypoints[7].position.x,
-          y: mydata.keypoints[7].position.y,
-        };
-
-        const leftWrist = {
-          x: mydata.keypoints[9].position.x,
-          y: mydata.keypoints[9].position.y,
-        };
-
-        var leftSE = Math.sqrt(
-          Math.pow(leftShoulder.x - leftElbow.x, 2) +
-            Math.pow(leftShoulder.y - leftElbow.y, 2)
-        );
-        var leftEW = Math.sqrt(
-          Math.pow(leftElbow.x - leftWrist.x, 2) +
-            Math.pow(leftElbow.y - leftWrist.y, 2)
-        );
-        var leftSW = Math.sqrt(
-          Math.pow(leftShoulder.x - leftWrist.x, 2) +
-            Math.pow(leftShoulder.y - leftWrist.y, 2)
-        );
-        //angle in radian
-
-        var resultRadianLeft = Math.acos(
-          (Math.pow(leftSE, 2) + Math.pow(leftEW, 2) - Math.pow(leftSW, 2)) /
-            (2 * leftSE * leftEW)
-        );
-
-        console.log('the left arm is moving on' + resultRadian + ' radian');
-
-        //angle in degree
-        var resultDegreeLeft =
-          (Math.acos(
-            (Math.pow(leftSE, 2) + Math.pow(leftEW, 2) - Math.pow(leftSW, 2)) /
-              (2 * leftSE * leftEW)
-          ) *
-            180) /
-          Math.PI;
-
-        console.log(
-          'the left arm is moving on ' + resultDegreeLeft + ' degree'
-        );
-
-        //calculate the percentage of target vs live
-
-        //live angle
-        const liveLeftShoulder = {
-          x: keypoints[5].position.x,
-          y: keypoints[5].position.y,
-        };
-
-        const liveLeftElbow = {
-          x: keypoints[7].position.x,
-          y: keypoints[7].position.y,
-        };
-
-        const liveLeftWrist = {
-          x: keypoints[9].position.x,
-          y: keypoints[9].position.y,
-        };
-
-        var liveLeftSE = Math.sqrt(
-          Math.pow(liveLeftShoulder.x - liveLeftElbow.x, 2) +
-            Math.pow(liveLeftShoulder.y - liveLeftElbow.y, 2)
-        );
-        var liveLeftEW = Math.sqrt(
-          Math.pow(liveLeftElbow.x - liveLeftWrist.x, 2) +
-            Math.pow(liveLeftElbow.y - liveLeftWrist.y, 2)
-        );
-        var liveLeftSW = Math.sqrt(
-          Math.pow(liveLeftShoulder.x - liveLeftWrist.x, 2) +
-            Math.pow(liveLeftShoulder.y - liveLeftWrist.y, 2)
-        );
-        //angle in radian
-
-        var resultRadianLeftLive = Math.acos(
-          (Math.pow(liveLeftSE, 2) +
-            Math.pow(liveLeftEW, 2) -
-            Math.pow(liveLeftSW, 2)) /
-            (2 * liveLeftSE * liveLeftEW)
-        );
-
-        console.log(
-          'the live left arm is moving on' + resultRadianLeftLive + ' radian'
-        );
-
-        //angle in degree
-        var resultDegreeLeftLive =
-          (Math.acos(
-            (Math.pow(liveLeftSE, 2) +
-              Math.pow(liveLeftEW, 2) -
-              Math.pow(liveLeftSW, 2)) /
-              (2 * liveLeftSE * liveLeftEW)
-          ) *
-            180) /
-          Math.PI;
-
-        console.log(
-          'the live left arm is moving on ' + resultDegreeLeftLive + ' degree'
-        );
-
-        //live right shoulder
-
-        const liveRightShoulder = {
-          x: keypoints[6].position.x,
-          y: keypoints[6].position.y,
-        };
-
-        const liveRightElbow = {
-          x: keypoints[8].position.x,
-          y: keypoints[8].position.y,
-        };
-
-        const liveRightWrist = {
-          x: keypoints[10].position.x,
-          y: keypoints[10].position.y,
-        };
-
-        var liveRightSE = Math.sqrt(
-          Math.pow(liveRightShoulder.x - liveRightElbow.x, 2) +
-            Math.pow(liveRightShoulder.y - liveRightElbow.y, 2)
-        );
-        var liveRightEW = Math.sqrt(
-          Math.pow(liveRightElbow.x - liveRightWrist.x, 2) +
-            Math.pow(liveRightElbow.y - liveRightWrist.y, 2)
-        );
-        var liveRightSW = Math.sqrt(
-          Math.pow(liveRightShoulder.x - liveRightWrist.x, 2) +
-            Math.pow(liveRightShoulder.y - liveRightWrist.y, 2)
-        );
-        //angle in radian
-
-        var resultRadianRightLive = Math.acos(
-          (Math.pow(liveRightSE, 2) +
-            Math.pow(liveRightEW, 2) -
-            Math.pow(liveRightSW, 2)) /
-            (2 * liveRightSE * liveRightEW)
-        );
-
-        console.log(
-          'the live left arm is moving on' + resultRadianRightLive + ' radian'
-        );
-
-        //angle in degree
-        var resultDegreeRightLive =
-          (Math.acos(
-            (Math.pow(liveRightSE, 2) +
-              Math.pow(liveRightEW, 2) -
-              Math.pow(liveRightSW, 2)) /
-              (2 * liveRightSE * liveRightEW)
-          ) *
-            180) /
-          Math.PI;
-
-        console.log(
-          'the live left arm is moving on ' + resultDegreeRightLive + ' degree'
-        );
-
-        function find_radian(Ax, Ay, Bx, By, Cx, Cy) {
-          const AB = Math.sqrt(Math.pow(Bx - Ax, 2) + Math.pow(By - Ay, 2));
-          const BC = Math.sqrt(Math.pow(Bx - Cx, 2) + Math.pow(By - Cy, 2));
-          const AC = Math.sqrt(Math.pow(Cx - Ax, 2) + Math.pow(Cy - Ay, 2));
-
-          return Math.acos(
-            (BC * BC + AB * AB - AC * AC) / (2 * BC * AB * (180 / Math.PI))
-          );
-        }
-        const shoulderModelRadianR = find_radian(
-          mydata.keypoints[8].position.x,
-          mydata.keypoints[8].position.y,
-          mydata.keypoints[6].position.x,
-          mydata.keypoints[6].position.y,
-          mydata.keypoints[12].position.x,
-          mydata.keypoints[12].position.y
-        );
-
-        const shoulderModelAngleR = shoulderModelRadianR * (180 / Math.PI);
-
-        console.log(
-          'right shoulder radian in the model is ' + shoulderModelRadianR
-        );
-        console.log(
-          ' right shoulder angle in the model is ' + shoulderModelAngleR
-        );
-
-        //
-
-        //model left
-
-        const shoulderModelRadianL = find_radian(
-          mydata.keypoints[7].position.x, // left elbow
-          mydata.keypoints[7].position.y,
-          mydata.keypoints[5].position.x, //left shoulder
-          mydata.keypoints[5].position.y,
-          mydata.keypoints[11].position.x, // lefthip
-          mydata.keypoints[11].position.y
-        );
-
-        const shoulderModelAngleL = shoulderModelRadianL * (180 / Math.PI);
-
-        console.log(
-          'left shoulder radian in the model is ' + shoulderModelRadianL
-        );
-        console.log(
-          'left shoulder angle in the model is ' + shoulderModelAngleL
-        );
-
-        //live right
-        const shoulderLiveRadianR = find_radian(
-          keypoints[8].position.x, //right elbow
-          keypoints[8].position.y,
-          keypoints[6].position.x, //right shoulder
-          keypoints[6].position.y,
-          keypoints[12].position.x, //right hip
-          keypoints[12].position.y
-        );
-
-        const shoulderLiveAngleR = shoulderLiveRadianR * (180 / Math.PI);
-
-        console.log('right shoulder radian live is ' + shoulderLiveRadianR);
-        console.log('right shoulder angle live is ' + shoulderLiveAngleR);
-        //live left
-        const shoulderLiveRadianL = find_radian(
-          keypoints[7].position.x, // left elbow
-          keypoints[7].position.y,
-          keypoints[5].position.x, //left shoulder
-          keypoints[5].position.y,
-          keypoints[11].position.x, // lefthip
-          keypoints[11].position.y
-        );
-
-        const shoulderLiveAngleL = shoulderLiveRadianL * (180 / Math.PI);
-
-        console.log('left shoulder radian live  is ' + shoulderLiveRadianL);
-        console.log('left shoulder angle live is ' + shoulderLiveAngleL);
-
-        // inward outward
-
-        // how to know the pose match?
-        //target angle vs live angle
-        console.log('target left shoulder angle is ' + shoulderModelAngleL); //Right shoulder model
-        console.log('while live left shoulder angle is ' + shoulderLiveAngleL); //right shoulder live
-
-        console.log('target right shoulder angle is ' + shoulderModelAngleR);
-        console.log('while live left shoulder angle is ' + shoulderLiveAngleR);
-
-        console.log('target left elbow angle is ' + resultDegreeLeft);
-        console.log('while live left elbow angle is ' + resultDegreeLeftLive);
-
-        console.log('target right elbow angle is ' + resultDegree);
-        console.log('while live right elbow angle is ' + resultDegreeRightLive);
-
-        console.log();
-
-        ctx.font = 'normal normal 20px arial';
-        ctx.textAlign = 'right';
-        ctx.fillText(
-          'Right Elbow Angle is  ' +
-            Math.round(resultDegreeRightLive.toString()),
-          550,
-          350
-        );
-        //ctx.fillText(Math.round(resultDegreeRightLive.toString()), 200, 100);
-
-        ctx.font = 'normal normal 20px arial';
-        //ctx.strokeStyle = 'red';
-        ctx.textAlign = 'left ';
-        ctx.fillText(
-          'Left Elbow Angle is  ' + Math.round(resultDegreeLeftLive.toString()),
-          300,
-          400
-        );
-        //ctx.fillText(Math.round(resultDegreeLeftLive.toString()), 200, 60);
-
-        ctx.font = 'normal normal 20px arial';
-        //ctx.strokeStyle = 'red';
-        ctx.textAlign = 'right ';
-        ctx.fillText(
-          'Right Shoulder Angle is  ' +
-            Math.round(shoulderLiveAngleR.toString()),
-          550,
-          60
-        );
-
-        ctx.font = 'normal normal 20px arial';
-        //ctx.strokeStyle = 'red';
-        ctx.textAlign = 'right ';
-        ctx.fillText(
-          'Left Shoulder Angle is  ' +
-            Math.round(shoulderLiveAngleL.toString()),
-          300,
-          80
-        );
-
-        //calculate percentage of the target and live angle in number
-
-        var numberTarget1 = shoulderModelAngleL;
-        var percentLiveTarget1 = shoulderLiveAngleL;
-
-        var percentSimilarityTarget1 =
-          (percentLiveTarget1 / 100) * numberTarget1;
-        console.log(percentSimilarityTarget1);
-
-        ctx.font = 'normal normal 20px arial';
-        //ctx.strokeStyle = 'red';
-        ctx.textAlign = 'right ';
-        ctx.fillText(
-          'You are ' +
-            Math.round(percentSimilarityTarget1.toString()) +
-            '% similar',
-          300,
-          100
-        );
-
-        var numberTarget2 = shoulderModelAngleR;
-        var percentLiveTarget2 = shoulderLiveAngleR;
-
-        var percentSimilarityTarget2 =
-          (percentLiveTarget2 / 100) * numberTarget2;
-        console.log(percentSimilarityTarget2);
-
-        ctx.font = 'normal normal 20px arial';
-        //ctx.strokeStyle = 'red';
-        ctx.textAlign = 'right ';
-        ctx.fillText(
-          'You are ' +
-            Math.round(percentSimilarityTarget2.toString()) +
-            '% similar',
-          550,
-          30
-        );
-
-        var numberTarget3 = resultDegreeLeft;
-        var percentLiveTarget3 = resultDegreeLeftLive;
-
-        var percentSimilarityTarget3 =
-          (percentLiveTarget3 / 100) * numberTarget3;
-        console.log(percentSimilarityTarget3);
-
-        ctx.font = 'normal normal 20px arial';
-        //ctx.strokeStyle = 'red';
-        ctx.textAlign = 'right ';
-        ctx.fillText(
-          'You are ' +
-            Math.round(percentSimilarityTarget3.toString()) +
-            '% similar',
-          300,
-          430
-        );
-
-        var numberTarget4 = resultDegree;
-        var percentLiveTarget4 = resultDegreeRightLive;
-
-        var percentSimilarityTarget4 =
-          (percentLiveTarget4 / 100) * numberTarget4;
-        console.log(percentSimilarityTarget4);
-
-        ctx.font = 'normal normal 20px arial';
-        //ctx.strokeStyle = 'red';
-        ctx.textAlign = 'right ';
-        ctx.fillText(
-          'You are ' +
-            Math.round(percentSimilarityTarget4.toString()) +
-            '% similar',
-          550,
-          380
-        );
-
-        // get degree values and put id to html
-        document.getElementById('value1').innerHTML =
-          'Right elbow: Target = ' +
-          Math.round(resultDegree) +
-          ' & you are = ' +
-          Math.round(resultDegreeRightLive);
-        document.getElementById('value2').innerHTML =
-          'Left elbow: Target = ' +
-          Math.round(resultDegreeLeft) +
-          ' & you are = ' +
-          Math.round(resultDegreeLeftLive);
-        document.getElementById('value3').innerHTML =
-          'Left shoulder: Target = ' +
-          Math.round(shoulderModelAngleL) +
-          ' & you are = ' +
-          Math.round(shoulderLiveAngleL);
-        document.getElementById('value4').innerHTML =
-          'Right shoulder: Target = ' +
-          Math.round(shoulderModelAngleR) +
-          ' & you are = ' +
-          Math.round(shoulderLiveAngleR);
-
-        //overall score? maybe using similarity js
-        */
-
-      // ++++++++++++Target data+++++++++++++
+      //start calculation
 
       const targetPose = [
         {
@@ -1453,113 +727,625 @@ function detectPoseInRealTime(video, net) {
         },
       ];
 
-      //30 jul iterate all
+      //Similarity Calculation
+      //get the target data. all 14 poses
       let xPosition = targetPose.map((k) => k.xpos);
-      console.log(xPosition); //17 arrays.how to breakdown into one array each
+      // console.log(xPosition); //17 arrays.how to breakdown into one array each
       let yPosition = targetPose.map((k) => k.ypos);
-      console.log(yPosition);
+      // console.log(yPosition);
+
+      //setup for function to iterate outer loop
+      //
+
+      //console.log("start targetpose", targetPose);
+
+      //  targetPose.forEach(function(getVectorTarget) {
+      //    //define a function but never excute
+      //    console.log('foreach target',getVectorTarget);
+      //    //get only one pose
+
+      // //for of
+      // for (let pose of targetPose) {
+      //   console.log(pose);
+      // }
 
       //set up initializor
       //only works for pose1
+      let vectorTarget = [];
       let i = 0;
       for (a in xPosition) {
         let xposT = xPosition[i];
         let yposT = yPosition[i];
-        console.log("xpos", xposT);
-        console.log("ypos", yposT);
+        //console.log("xpos", xposT);
+        //console.log("ypos", yposT);
         let minX = Math.min(...xposT);
         let minY = Math.min(...yposT);
-        console.log("min x", minX);
-        console.log("min y", minY);
-
-        let vector = [];
-        for (var j = 0; j < xposT.length; j++) {
-          vector.push(xposT[j] - minX);
-          vector.push(yposT[j] - minY);
-        }
-        console.log("vector", vector);
-        i++;
-      }
-      //+++++++++++++comment to get keypoints+++++++++
-
-      console.log("live keypoints", keypoints);
-      const pose = keypoints;
-      //console.log("pose keypoint", pose.keypoints); //undefined
-      const xPosLive = keypoints.map((k) => k.position.x);
-      console.log("map", xPosLive); //array of all keypoints
-
-      //set up initializor
-      //only works for pose1
-      let l = 0;
-      for (b in xPosLive) {
-        let xposL = xPosLive;
-        //let ypos = yPosition[i];
-        console.log("xpos", xposL);
-        //console.log("ypos", ypos);
-        let minXL = Math.min(...xposL); //non callable iterator
-        //let minY = Math.min(...ypos);
-        console.log("min x", minXL);
+        //console.log("min x", minX);
         //console.log("min y", minY);
 
-        let vectorLive = [];
-        for (var m = 0; m < xposL.length; m++) {
-          vectorLive.push(xposL[m] - minXL);
-          //vector.push(ypos[j] - minY);
+        for (var j = 0; j < xposT.length; j++) {
+          vectorTarget.push(xposT[j] - minX);
+          vectorTarget.push(yposT[j] - minY);
         }
-        console.log("vector", vectorLive);
+        //console.log("vector target", vectorTarget);
         i++;
       }
 
-      //import { poseSimilarity } from "posenet-similarity";
+      //+++ set target data into similarity calculation
+      //slice 14poses
+
+      const sliced = [];
+      for (var z = 0; z < vectorTarget.length; z += 34) {
+        sliced.push(vectorTarget.slice(z, z + 34));
+      }
+      //console.log("sliced target", sliced); //34 data
+
+      //array is sliced //set up delay 3 seconds
+
+      // const interval = 3000;
+      // let slicedvector = sliced.forEach(function (oneVectorPose, index) {
+      //   setTimeout(() => {
+      //     console.log(oneVectorPose);
+      //   }, index * interval);
+      // });
+
+      // console.log("end");
+      //console.log("slicedvector", slicedvector); //undefined
+
+      //++++++++ live keypoints++++// this is one loop that keeps updating
+      // console.log("live keypoints", keypoints);
+
+      //8 aug 21
+      //testing to get return value from live keypoints
+      const poseLive = getLivePose();
+
+      function getLivePose() {
+        //console.log("pose keypoint", pose.keypoints); //undefined
+        const xPosLive = keypoints.map((k) => k.position.x);
+        //console.log("map", xPosLive); //array of all keypoints
+        const yPosLive = keypoints.map((k) => k.position.y);
+
+        //let vectorLive = []; //if put here.
+        for (b in xPosLive) {
+          let xposL = xPosLive;
+          let yposL = yPosLive;
+          //let ypos = yPosition[i];
+          //console.log("xpos", xposL);
+          //console.log("ypos", ypos);
+          let minXL = Math.min(...xposL);
+          let minYL = Math.min(...yposL);
+          //let minY = Math.min(...ypos);
+          // console.log("min x", minXL);
+          // console.log("min y", minYL);
+
+          // function getVectorLive() {
+          let vectorLive = []; //if put here , undefined
+          for (var m = 0; m < xposL.length; m++) {
+            vectorLive.push(xposL[m] - minXL);
+            vectorLive.push(yposL[m] - minYL);
+            //vector.push(ypos[j] - minY);
+          }
+          return vectorLive;
+          // } //last function
+        } //for loop
+      } //for live function
+
+      //console.log("vector out", vectorLive);
+      //similarity calculation
+
+      //const test = getLivePose();
+      // console.log("result from function", test); //same
+      // console.log("livepose", poseLive); //same
+      // console.log("vector live out", vectorLive); //undefined here
+
+      // //sliced = is sliced array for each pose
+      // //entry to similarity one by one with delay
+
       const similarity = require("compute-cosine-similarity");
-      const pose1 = [
-        338.41225590687316, 355.21071467418153, 315.87973242140004,
-        378.38232968104023, 274.19273613955727, 421.7554518406493,
-        213.3405989709995, 517.097552110249, 117.12701018218401,
-        552.972455154597, 150.6275043413333, 455.7871397738327,
-        221.53676311329644, 482.4750818631065, 147.9674544872477,
-        482.3688064753313, 157.39926156366846,
-      ];
-      const pose2 = [
-        96.2918447056633, 77.62438955937841, 76.0972752552552,
-        91.38114840140139, 87.45391608212245, 169.5519983907618,
-        173.97316543044747, 299.8198299185311, 306.97488747682087,
-        392.13241102166677, 391.0415275365926, 455.3677783773103,
-        456.988785443139, 558.827905024072, 535.6223068534168,
-        558.9190228532724, 540.9849019922635,
-      ];
-      // calculate with the default strateg
-      const result = similarity(pose1, pose2);
-      console.log(result);
 
-      //insert similarity calculation
-      //test similarity
-
-      // export const poseSimilarity = (pose1, pose2) => {
-      //   const poseVector1 = getTargetPoseVector(pose1);
-      //   const poseVector2 = getTargetPoseVector(pose2);
-      //   return similarityDistance(poseVector1, poseVector2);
-      // };
-
-      // function getTargetPoseVector(pose) {
-      //   const xPos = pose.keypoints.map((k) => k.position.x);
-      //   const yPos = pose.keypoints.map((k) => k.position.y);
-
-      //   const vector = [];
-      //   for (let i = 0; i < xPos.length; i++) {
-      //     vector.push(xPos[i]);
-      //     vector.push(yPos[i]);
-      //   }
-      //   return vector;
-
-      //   function similarityDistance(poseVector1, poseVector2) {
-      //     const cosinesimilarity = similarity(poseVector1, poseVector2);
+      // function delay() {
+      //   setTimeout(function similarityDistance1(target, live) {
+      //     const cosinesimilarity = similarity(sliced[0], poseLive);
       //     const distace = 2 * (1 - cosinesimilarity);
-      //     return Math.sqrt(distace);
-      //   }
-      //
+      //     const squaredDistance = Math.sqrt(distace);
+      //     console.log("distance 1", squaredDistance);
+      //     document.getElementById("similarityPose1").innerHTML =
+      //       "you are " +
+      //       Math.round(squaredDistance * 100) +
+      //       "% similar with the start pose";
+      //     return squaredDistance;
+      //   }, 3000);
       // }
-      //}; // kurung tutup XHR
+      // delay();
+
+      // clearTimeout(delay);
+      // function clearUI() {
+      //   document.getElementById("remove").innerHTML = "";
+      // }
+
+      //try getting general function
+      //+++++
+      /*
+
+      function getSimilarityValue(target, data) {
+        const cosinesimilarity = similarity(sliced[0], poseLive);
+        const distace = 2 * (1 - cosinesimilarity);
+        const squaredDistance = Math.sqrt(distace);
+        document.getElementById("similarityPose1").innerHTML =
+          "you are " +
+          Math.round(squaredDistance * 100) +
+          "% similar with the start pose";
+        return squaredDistance;
+      }
+      getSimilarityValue();
+
+      //still show up once in a while
+      // function clearUI1() {
+      //   document.getElementById("similarityPose1").innerHTML = "";
+      // } 
+      // setTimeout(clearUI1, 4000);
+
+
+      // setTimeout(() => {
+      //   // const testSimilarity1 = getSimilarityValue(sliced[1], poseLive);
+      //   // document.getElementById("similarityPose1").innerHTML =
+      //   //   "you are " +
+      //   //   Math.round(testSimilarity1 * 100) +
+      //   //   "% similar with the start pose";
+      //   // console.log("testing", testSimilarity1);
+      //   const test = getSimilarityValue(sliced[1], poseLive);
+      //   console.log("test", test);
+      //   document.getElementById("similarityPose1").innerHTML =
+      //     "you are " + Math.round(test * 100) + "% similar with the start pose";
+      // }, 4000);
+
+      //check return
+      // const testresult = results;
+      // console.log(testresult); //undefined none
+
+     
+      function delay2() {
+        setTimeout(function similarityDistance(target, live) {
+          const cosinesimilarity2 = similarity(sliced[1], poseLive);
+          const distace2 = 2 * (1 - cosinesimilarity2);
+          const squaredDistance2 = Math.sqrt(distace2);
+          console.log("distance 2", squaredDistance2);
+          document.getElementById("similarityPose2").innerHTML =
+            "you are " +
+            Math.round(squaredDistance2 * 100) +
+            "% similar with the pose 2";
+          return Math.sqrt(distace);
+        }, 6000);
+      }
+      delay2();
+
+      clearTimeout(delay2);
+
+      function delay3() {
+        setTimeout(function similarityDistance(target, live) {
+          const cosinesimilarity3 = similarity(sliced[2], poseLive);
+          const distace3 = 2 * (1 - cosinesimilarity3);
+          const squaredDistance3 = Math.sqrt(distace3);
+          console.log("distance 3", squaredDistance3);
+          document.getElementById("similarityPose3").innerHTML =
+            "you are " +
+            Math.round(squaredDistance3 * 100) +
+            "% similar with the pose 3";
+          // return Math.sqrt(distace);
+        }, 9000);
+      }
+      delay3();
+
+      function delay4() {
+        setTimeout(function similarityDistance(target, live) {
+          const cosinesimilarity4 = similarity(sliced[3], poseLive);
+          const distace4 = 2 * (1 - cosinesimilarity4);
+          const squaredDistance4 = Math.sqrt(distace4);
+          console.log("distance 4", squaredDistance4);
+          document.getElementById("similarityPose4").innerHTML =
+            "you are " +
+            Math.round(squaredDistance4 * 100) +
+            "% similar with the pose 4";
+          // return Math.sqrt(distace);
+        }, 12000);
+      }
+      delay4();
+
+      function delay5() {
+        setTimeout(function similarityDistance(target, live) {
+          const cosinesimilarity5 = similarity(sliced[4], poseLive);
+          const distace5 = 2 * (1 - cosinesimilarity5);
+          const squaredDistance5 = Math.sqrt(distace5);
+          console.log("distance 5", squaredDistance5);
+          document.getElementById("similarityPose5").innerHTML =
+            "you are " +
+            Math.round(squaredDistance5 * 100) +
+            "% similar with the pose 5";
+          // return Math.sqrt(distace);
+        }, 15000);
+      }
+      delay5();
+
+      function delay6() {
+        setTimeout(function similarityDistance(target, live) {
+          const cosinesimilarity6 = similarity(sliced[5], poseLive);
+          const distace6 = 2 * (1 - cosinesimilarity6);
+          const squaredDistance6 = Math.sqrt(distace6);
+          console.log("distance 6", squaredDistance6);
+          // return Math.sqrt(distace);
+          document.getElementById("similarityPose6").innerHTML =
+            "you are " +
+            Math.round(squaredDistance6 * 100) +
+            "% similar with the pose 6";
+        }, 18000);
+      }
+      delay6();
+
+      function delay7() {
+        setTimeout(function similarityDistance(target, live) {
+          const cosinesimilarity7 = similarity(sliced[6], poseLive);
+          const distace7 = 2 * (1 - cosinesimilarity7);
+          const squaredDistance7 = Math.sqrt(distace7);
+          console.log("distance 7", squaredDistance7);
+          document.getElementById("similarityPose7").innerHTML =
+            "you are " +
+            Math.round(squaredDistance7 * 100) +
+            "% similar with the pose 7";
+          // return Math.sqrt(distace);
+        }, 21000);
+      }
+      delay7();
+
+      function delay8() {
+        setTimeout(function similarityDistance(target, live) {
+          const cosinesimilarity8 = similarity(sliced[7], poseLive);
+          const distace8 = 2 * (1 - cosinesimilarity8);
+          const squaredDistance8 = Math.sqrt(distace8);
+          console.log("distance 8", squaredDistance8);
+          document.getElementById("similarityPose8").innerHTML =
+            "you are " +
+            Math.round(squaredDistance8 * 100) +
+            "% similar with the pose 8";
+          // return Math.sqrt(distace);
+        }, 24000);
+      }
+      delay8();
+
+      function delay9() {
+        setTimeout(function similarityDistance(target, live) {
+          const cosinesimilarity9 = similarity(sliced[8], poseLive);
+          const distace9 = 2 * (1 - cosinesimilarity9);
+          const squaredDistance9 = Math.sqrt(distace9);
+          console.log("distance 9", squaredDistance9);
+          document.getElementById("similarityPose9").innerHTML =
+            "you are " +
+            Math.round(squaredDistance9 * 100) +
+            "% similar with the pose 9";
+          // return Math.sqrt(distace);
+        }, 27000);
+      }
+      delay9();
+
+      function delay10() {
+        setTimeout(function similarityDistance(target, live) {
+          const cosinesimilarity10 = similarity(sliced[9], poseLive);
+          const distace10 = 2 * (1 - cosinesimilarity10);
+          const squaredDistance10 = Math.sqrt(distace10);
+          console.log("distance 10", squaredDistance10);
+          document.getElementById("similarityPose10").innerHTML =
+            "you are " +
+            Math.round(squaredDistance10 * 100) +
+            "% similar with the pose 10";
+          // return Math.sqrt(distace);
+        }, 30000);
+      }
+      delay10();
+
+      function delay11() {
+        setTimeout(function similarityDistance(target, live) {
+          const cosinesimilarity11 = similarity(sliced[10], poseLive);
+          const distace11 = 2 * (1 - cosinesimilarity11);
+          const squaredDistance11 = Math.sqrt(distace11);
+          console.log("distance 11", squaredDistance11);
+          document.getElementById("similarityPose11").innerHTML =
+            "you are " +
+            Math.round(squaredDistance11 * 100) +
+            "% similar with the pose 11";
+          // return Math.sqrt(distace);
+        }, 33000);
+      }
+      delay11();
+
+      function delay12() {
+        setTimeout(function similarityDistance(target, live) {
+          const cosinesimilarity12 = similarity(sliced[11], poseLive);
+          const distace12 = 2 * (1 - cosinesimilarity12);
+          const squaredDistance12 = Math.sqrt(distace12);
+          console.log("distance 12", squaredDistance12);
+          document.getElementById("similarityPose12").innerHTML =
+            "you are " +
+            Math.round(squaredDistance12 * 100) +
+            "% similar with the pose 12";
+          // return Math.sqrt(distace);
+        }, 36000);
+      }
+      delay12();
+
+      function delay13() {
+        setTimeout(function similarityDistance(target, live) {
+          const cosinesimilarity13 = similarity(sliced[12], poseLive);
+          const distace13 = 2 * (1 - cosinesimilarity13);
+          const squaredDistance13 = Math.sqrt(distace13);
+          console.log("distance 13", squaredDistance13);
+          document.getElementById("similarityPose13").innerHTML =
+            "you are " +
+            Math.round(squaredDistance13 * 100) +
+            "% similar with the pose 13";
+          // return Math.sqrt(distace);
+        }, 39000);
+      }
+      delay13();
+
+      function delay14() {
+        setTimeout(function similarityDistance(target, live) {
+          console.log(sliced[14]);
+          const cosinesimilarity14 = similarity(sliced[13], poseLive);
+          const distace14 = 2 * (1 - cosinesimilarity14);
+          const squaredDistance14 = Math.sqrt(distace14);
+          console.log("distance 14", squaredDistance14);
+          document.getElementById("similarityPose14").innerHTML =
+            "you are " +
+            Math.round(squaredDistance14 * 100) +
+            "% similar with the pose 14";
+          // return Math.sqrt(distace);
+        }, 39000);
+      }
+      delay14();
+
+      //change text in UI after 5 seconds //doesnt work
+
+      // const similarityResult = [Math.round(distance1 * 100)];
+      // console.log("show result in ui", similarityResult);
+
+      //   function showSimilarityResult(){
+      //     setTimeout(
+      //       function (){
+      //         getElementById(similarityPose1).style.display='none';
+      //         getElementById(similarityPose2).style.display='none';
+      //       }, 5000)
+      //   } 
+
+      */
+
+      //try in a function //this still show result once in a while
+      function similarityDistance1(target, data) {
+        const cosinesimilarity = similarity(sliced[0], poseLive);
+        const distace = 2 * (1 - cosinesimilarity);
+        const squaredDistance = Math.sqrt(distace);
+        document.getElementById("similarityPose1").innerHTML =
+          "you are " +
+          Math.round(squaredDistance * 100) +
+          "% similar with the start pose";
+        return squaredDistance;
+      }
+      similarityDistance1();
+
+      function similarityDistance2(target, live) {
+        const cosinesimilarity2 = similarity(sliced[1], poseLive);
+        const distace2 = 2 * (1 - cosinesimilarity2);
+        const squaredDistance2 = Math.sqrt(distace2);
+        console.log("distance 2", squaredDistance2);
+        document.getElementById("similarityPose2").innerHTML =
+          "you are " +
+          Math.round(squaredDistance2 * 100) +
+          "% similar with the pose 2";
+        return Math.sqrt(distace2);
+      }
+
+      similarityDistance2();
+
+      function similarityDistance3(target, live) {
+        const cosinesimilarity3 = similarity(sliced[2], poseLive);
+        const distace3 = 2 * (1 - cosinesimilarity3);
+        const squaredDistance3 = Math.sqrt(distace3);
+        console.log("distance 3", squaredDistance3);
+        document.getElementById("similarityPose3").innerHTML =
+          "you are " +
+          Math.round(squaredDistance3 * 100) +
+          "% similar with the pose 3";
+        // return Math.sqrt(distace);
+      }
+      similarityDistance3();
+
+      function similarityDistance4(target, live) {
+        const cosinesimilarity4 = similarity(sliced[3], poseLive);
+        const distace4 = 2 * (1 - cosinesimilarity4);
+        const squaredDistance4 = Math.sqrt(distace4);
+        console.log("distance 4", squaredDistance4);
+        document.getElementById("similarityPose4").innerHTML =
+          "you are " +
+          Math.round(squaredDistance4 * 100) +
+          "% similar with the pose 4";
+      }
+      similarityDistance4();
+
+      function similarityDistance5(target, live) {
+        const cosinesimilarity5 = similarity(sliced[4], poseLive);
+        const distace5 = 2 * (1 - cosinesimilarity5);
+        const squaredDistance5 = Math.sqrt(distace5);
+        console.log("distance 5", squaredDistance5);
+        document.getElementById("similarityPose5").innerHTML =
+          "you are " +
+          Math.round(squaredDistance5 * 100) +
+          "% similar with the pose 5";
+      }
+      similarityDistance5();
+
+      function similarityDistance6(target, live) {
+        const cosinesimilarity6 = similarity(sliced[5], poseLive);
+        const distace6 = 2 * (1 - cosinesimilarity6);
+        const squaredDistance6 = Math.sqrt(distace6);
+        console.log("distance 6", squaredDistance6);
+        // return Math.sqrt(distace);
+        document.getElementById("similarityPose6").innerHTML =
+          "you are " +
+          Math.round(squaredDistance6 * 100) +
+          "% similar with the pose 6";
+      }
+      similarityDistance6();
+
+      function similarityDistance7(target, live) {
+        const cosinesimilarity7 = similarity(sliced[6], poseLive);
+        const distace7 = 2 * (1 - cosinesimilarity7);
+        const squaredDistance7 = Math.sqrt(distace7);
+        console.log("distance 7", squaredDistance7);
+        document.getElementById("similarityPose7").innerHTML =
+          "you are " +
+          Math.round(squaredDistance7 * 100) +
+          "% similar with the pose 7";
+        // return Math.sqrt(distace);
+      }
+      similarityDistance7();
+
+      function similarityDistance8(target, live) {
+        const cosinesimilarity8 = similarity(sliced[7], poseLive);
+        const distace8 = 2 * (1 - cosinesimilarity8);
+        const squaredDistance8 = Math.sqrt(distace8);
+        console.log("distance 8", squaredDistance8);
+        document.getElementById("similarityPose8").innerHTML =
+          "you are " +
+          Math.round(squaredDistance8 * 100) +
+          "% similar with the pose 8";
+        // return Math.sqrt(distace);
+      }
+      similarityDistance8();
+
+      function similarityDistance9(target, live) {
+        const cosinesimilarity9 = similarity(sliced[8], poseLive);
+        const distace9 = 2 * (1 - cosinesimilarity9);
+        const squaredDistance9 = Math.sqrt(distace9);
+        console.log("distance 9", squaredDistance9);
+        document.getElementById("similarityPose9").innerHTML =
+          "you are " +
+          Math.round(squaredDistance9 * 100) +
+          "% similar with the pose 9";
+        // return Math.sqrt(distace);
+      }
+      similarityDistance9();
+
+      function similarityDistance10(target, live) {
+        const cosinesimilarity10 = similarity(sliced[9], poseLive);
+        const distace10 = 2 * (1 - cosinesimilarity10);
+        const squaredDistance10 = Math.sqrt(distace10);
+        console.log("distance 10", squaredDistance10);
+        document.getElementById("similarityPose10").innerHTML =
+          "you are " +
+          Math.round(squaredDistance10 * 100) +
+          "% similar with the pose 10";
+        // return Math.sqrt(distace);
+      }
+      similarityDistance10();
+
+      function similarityDistance11(target, live) {
+        const cosinesimilarity11 = similarity(sliced[10], poseLive);
+        const distace11 = 2 * (1 - cosinesimilarity11);
+        const squaredDistance11 = Math.sqrt(distace11);
+        console.log("distance 11", squaredDistance11);
+        document.getElementById("similarityPose11").innerHTML =
+          "you are " +
+          Math.round(squaredDistance11 * 100) +
+          "% similar with the pose 11";
+        // return Math.sqrt(distace);
+      }
+      similarityDistance11();
+
+      function similarityDistance12(target, live) {
+        const cosinesimilarity12 = similarity(sliced[11], poseLive);
+        const distace12 = 2 * (1 - cosinesimilarity12);
+        const squaredDistance12 = Math.sqrt(distace12);
+        console.log("distance 12", squaredDistance12);
+        document.getElementById("similarityPose12").innerHTML =
+          "you are " +
+          Math.round(squaredDistance12 * 100) +
+          "% similar with the pose 12";
+        // return Math.sqrt(distace);
+      }
+      similarityDistance12();
+
+      function similarityDistance13(target, live) {
+        const cosinesimilarity13 = similarity(sliced[12], poseLive);
+        const distace13 = 2 * (1 - cosinesimilarity13);
+        const squaredDistance13 = Math.sqrt(distace13);
+        console.log("distance 13", squaredDistance13);
+        document.getElementById("similarityPose13").innerHTML =
+          "you are " +
+          Math.round(squaredDistance13 * 100) +
+          "% similar with the pose 13";
+        // return Math.sqrt(distace);
+      }
+      similarityDistance13();
+
+      function similarityDistance14(target, live) {
+        const cosinesimilarity14 = similarity(sliced[13], poseLive);
+        const distace14 = 2 * (1 - cosinesimilarity14);
+        const squaredDistance14 = Math.sqrt(distace14);
+        console.log("distance 14", squaredDistance14);
+        document.getElementById("similarityPose14").innerHTML =
+          "you are " +
+          Math.round(squaredDistance14 * 100) +
+          "% similar with the pose 14";
+        // return Math.sqrt(distace);
+      }
+      similarityDistance14();
+
+      // return Math.sqrt(distace);
+
+      //still show up once in a while
+      // function clearUI1() {
+      //   document.getElementById("similarityPose1").innerHTML = "";
+      // }
+
+      // setTimeout(clearUI1, 5000);
+
+      // function delay2() {
+      //   setTimeout(function similarityDistance(target, live) {
+      //     const cosinesimilarity2 = similarity(sliced[1], poseLive);
+      //     const distace2 = 2 * (1 - cosinesimilarity2);
+      //     const squaredDistance2 = Math.sqrt(distace2);
+      //     console.log("distance 2", squaredDistance2);
+      //     document.getElementById("similarityPose2").innerHTML =
+      //       "you are " +
+      //       Math.round(squaredDistance2 * 100) +
+      //       "% similar with the pose 2";
+      //     return Math.sqrt(distace2);
+      //   }, 5000);
+      // }
+      // delay2();
+
+      // function clearUI2() {
+      //   document.getElementById("similarityPose2").innerHTML = "";
+      // }
+      // clearTimeout(clearUI2, 10000);
+
+      // function delay3() {
+      //   setTimeout(function similarityDistance(target, live) {
+      //     const cosinesimilarity3 = similarity(sliced[2], poseLive);
+      //     const distace3 = 2 * (1 - cosinesimilarity3);
+      //     const squaredDistance3 = Math.sqrt(distace3);
+      //     console.log("distance 3", squaredDistance3);
+      //     document.getElementById("similarityPose3").innerHTML =
+      //       "you are " +
+      //       Math.round(squaredDistance3 * 100) +
+      //       "% similar with the pose 3";
+      //     // return Math.sqrt(distace);
+      //   }, 10000);
+      // }
+      // delay3();
+
+      // function clearUI3() {
+      //   document.getElementById("similarityPose2").innerHTML = "";
+      // }
+      // clearTimeout(clearUI3, 15000);
     });
 
     // End monitoring code for frames per second
@@ -1609,7 +1395,6 @@ navigator.getUserMedia =
   navigator.webkitGetUserMedia ||
   navigator.mozGetUserMedia;
 // kick off the demo
-
 bindPage();
 
 },{"compute-cosine-similarity":2}],2:[function(require,module,exports){
